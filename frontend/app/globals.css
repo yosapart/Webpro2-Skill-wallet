@@ -22,5 +22,24 @@
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-lineseed), 'Prompt', Arial, Helvetica, sans-serif;
 }
+
+/* Global Reset to prevent annoying white focus rings and tap highlights */
+a, button, [role="button"], input, textarea, select {
+  -webkit-tap-highlight-color: transparent !important;
+}
+
+a:focus, a:active, a:focus-visible,
+button:focus, button:active, button:focus-visible,
+div:focus, div:active, div:focus-visible,
+span:focus, span:active, span:focus-visible {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* Next.js specific Link outline removal */
+a.outline-none, button.outline-none, div.outline-none {
+  outline: none !important;
+}
+
