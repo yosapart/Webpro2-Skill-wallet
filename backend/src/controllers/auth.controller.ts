@@ -170,9 +170,9 @@ export const AuthController = {
                 role: userData?.role,
                 data: userData
             };
-        } catch (error) {
+        } catch (error: any) {
             console.error("Firebase verifyIdToken error:", error);
-            return { status: "error", message: "Authentication Failed" };
+            return { status: "error", message: `Authentication Failed: ${error?.message || "Unknown error"}` };
         }
     }
 };
