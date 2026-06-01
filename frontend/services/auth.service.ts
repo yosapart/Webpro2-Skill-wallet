@@ -3,6 +3,13 @@ import { auth, googleProvider } from "../config/firebase";
 
 export const DEFAULT_AVATAR = "https://cdn-icons-png.flaticon.com/512/149/149071.png";
 
+const getApiUrl = () => {
+  if (typeof window !== "undefined" && window.location.hostname !== "localhost") {
+    return "https://webpro2-skill-wallet-1.onrender.com/api";
+  }
+  return "http://localhost:3001/api";
+};
+
 export const AuthService = {
   // ล็อกอินด้วย Google (Frontend)
   async loginWithGoogle() {
@@ -15,7 +22,7 @@ export const AuthService = {
       const idToken = await result.user.getIdToken();
 
       // ส่ง Token ไปตรวจสอบกับ Backend
-      const response = await fetch("https://webpro2-skill-wallet-1.onrender.com/api/auth/login-check", {
+      const response = await fetch(`${getApiUrl()}/auth/login-check`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ idToken }),
@@ -57,7 +64,7 @@ export const AuthService = {
         const idToken = await result.user.getIdToken();
 
         // ส่ง Token ไปตรวจสอบกับ Backend เพื่อเอา Role
-        const response = await fetch("https://webpro2-skill-wallet-1.onrender.com/api/auth/login-check", {
+        const response = await fetch(`${getApiUrl()}/auth/login-check`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ idToken }),
@@ -80,7 +87,7 @@ export const AuthService = {
       }
 
       // 2. ถ้าวิธีแรกไม่สำเร็จ ให้ลองยิง API ตรวจสอบกับ Firestore โดยตรง (สำหรับอาจารย์)
-      const response = await fetch("https://webpro2-skill-wallet-1.onrender.com/api/auth/login/verifier", {
+      const response = await fetch(`${getApiUrl()}/auth/login/verifier`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email: email, password: password || "" }),
@@ -112,7 +119,7 @@ export const AuthService = {
 
   // สมัครนักศึกษาใหม่ (ลง Firestore)
   async registerStudent(idToken: string, name: string) {
-    const response = await fetch("https://webpro2-skill-wallet-1.onrender.com/api/auth/register/student", {
+    const response = await fetch(`${getApiUrl()}/auth/register/student`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ idToken, name, avatar_url: DEFAULT_AVATAR }),
