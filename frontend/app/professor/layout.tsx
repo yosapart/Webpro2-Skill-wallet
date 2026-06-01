@@ -33,7 +33,7 @@ export default function ProfessorLayout({ children }: { children: React.ReactNod
                     router.push('/login');
                     return;
                 }
-                const res = await fetch("http://localhost:3001/api/auth/me", {
+                const res = await fetch("https://webpro2-skill-wallet-1.onrender.com/api/auth/me", {
                     headers: { Authorization: `Bearer ${token}` }
                 });
                 const data = await res.json();

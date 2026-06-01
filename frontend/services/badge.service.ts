@@ -7,7 +7,7 @@ export const BadgeService = {
       const token = await AuthService.getFreshToken();
       if (!token) throw new Error("No token found");
 
-      const response = await fetch("http://localhost:3001/api/badges", {
+      const response = await fetch("https://webpro2-skill-wallet-1.onrender.com/api/badges", {
         method: "GET",
         headers: {
           "Authorization": `Bearer ${token}`,
@@ -30,7 +30,7 @@ export const BadgeService = {
       const formData = new FormData();
       formData.append("file", file);
 
-      const response = await fetch("http://localhost:3001/api/badge-requests/upload", {
+      const response = await fetch("https://webpro2-skill-wallet-1.onrender.com/api/badge-requests/upload", {
         method: "POST",
         headers: { "Authorization": `Bearer ${token}` },
         body: formData
@@ -53,7 +53,7 @@ export const BadgeService = {
       const token = await AuthService.getFreshToken();
       if (!token) throw new Error("No token found");
 
-      const response = await fetch("http://localhost:3001/api/badge-requests", {
+      const response = await fetch("https://webpro2-skill-wallet-1.onrender.com/api/badge-requests", {
         method: "POST",
         headers: {
           "Authorization": `Bearer ${token}`,
@@ -73,7 +73,7 @@ export const BadgeService = {
       const token = await AuthService.getFreshToken();
       if (!token) throw new Error("No token found");
 
-      const response = await fetch("http://localhost:3001/api/badge-requests/my-requests", {
+      const response = await fetch("https://webpro2-skill-wallet-1.onrender.com/api/badge-requests/my-requests", {
         method: "GET",
         headers: {
           "Authorization": `Bearer ${token}`,

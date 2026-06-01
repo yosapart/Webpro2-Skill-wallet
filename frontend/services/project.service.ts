@@ -1,6 +1,6 @@
 import { AuthService } from './auth.service';
 
-const API_BASE = process.env.NEXT_PUBLIC_API_BASE || "http://localhost:3001";
+const API_BASE = process.env.NEXT_PUBLIC_API_BASE || "https://webpro2-skill-wallet-1.onrender.com";
 const API_URL = `${API_BASE}/api/project`;
 
 export interface ProjectData {

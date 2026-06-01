@@ -18,7 +18,7 @@ export const FeetbackService = {
       const token = await AuthService.getFreshToken();
       if (!token) throw new Error("No token found");
 
-      const response = await fetch("http://localhost:3001/api/feetback", {
+      const response = await fetch("https://webpro2-skill-wallet-1.onrender.com/api/feetback", {
         method: "POST",
         headers: {
           "Authorization": `Bearer ${token}`,

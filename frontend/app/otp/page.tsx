@@ -36,7 +36,7 @@ function OTPContent() {
     setError('');
     
     try {
-      const res = await fetch("http://localhost:3001/api/auth/otp/send", {
+      const res = await fetch("https://webpro2-skill-wallet-1.onrender.com/api/auth/otp/send", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, purpose })
@@ -101,7 +101,7 @@ function OTPContent() {
 
     try {
       // 1. Verify OTP
-      const verifyRes = await fetch("http://localhost:3001/api/auth/otp/verify", {
+      const verifyRes = await fetch("https://webpro2-skill-wallet-1.onrender.com/api/auth/otp/verify", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, otp: otpValue, purpose })
@@ -120,7 +120,7 @@ function OTPContent() {
         if (storedUser) {
           const userData = JSON.parse(storedUser);
 
-          const regRes = await fetch("http://localhost:3001/api/auth/register/email", {
+          const regRes = await fetch("https://webpro2-skill-wallet-1.onrender.com/api/auth/register/email", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(userData)

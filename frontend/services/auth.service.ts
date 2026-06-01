@@ -15,7 +15,7 @@ export const AuthService = {
       const idToken = await result.user.getIdToken();
 
       // ส่ง Token ไปตรวจสอบกับ Backend
-      const response = await fetch("http://localhost:3001/api/auth/login-check", {
+      const response = await fetch("https://webpro2-skill-wallet-1.onrender.com/api/auth/login-check", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ idToken }),
@@ -57,7 +57,7 @@ export const AuthService = {
         const idToken = await result.user.getIdToken();
 
         // ส่ง Token ไปตรวจสอบกับ Backend เพื่อเอา Role
-        const response = await fetch("http://localhost:3001/api/auth/login-check", {
+        const response = await fetch("https://webpro2-skill-wallet-1.onrender.com/api/auth/login-check", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ idToken }),
@@ -80,7 +80,7 @@ export const AuthService = {
       }
 
       // 2. ถ้าวิธีแรกไม่สำเร็จ ให้ลองยิง API ตรวจสอบกับ Firestore โดยตรง (สำหรับอาจารย์)
-      const response = await fetch("http://localhost:3001/api/auth/login/verifier", {
+      const response = await fetch("https://webpro2-skill-wallet-1.onrender.com/api/auth/login/verifier", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email: email, password: password || "" }),
@@ -112,7 +112,7 @@ export const AuthService = {
 
   // สมัครนักศึกษาใหม่ (ลง Firestore)
   async registerStudent(idToken: string, name: string) {
-    const response = await fetch("http://localhost:3001/api/auth/register/student", {
+    const response = await fetch("https://webpro2-skill-wallet-1.onrender.com/api/auth/register/student", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ idToken, name, avatar_url: DEFAULT_AVATAR }),

@@ -60,7 +60,7 @@ function ResetPasswordContent() {
     setError('');
 
     try {
-      const res = await fetch("http://localhost:3001/api/auth/reset-password", {
+      const res = await fetch("https://webpro2-skill-wallet-1.onrender.com/api/auth/reset-password", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, otp: otpValue, newPassword })

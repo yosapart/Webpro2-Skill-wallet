@@ -33,7 +33,7 @@ export const useRequestData = () => {
                 const token = await AuthService.getFreshToken();
                 if (!token) return;
 
-                const res = await fetch("http://localhost:3001/api/professor/badge-requests", {
+                const res = await fetch("https://webpro2-skill-wallet-1.onrender.com/api/professor/badge-requests", {
                     headers: { Authorization: `Bearer ${token}` }
                 });
                 const data = await res.json();

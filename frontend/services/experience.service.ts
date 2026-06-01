@@ -1,6 +1,6 @@
 import { auth } from '../config/firebase';
 
-const API_BASE = process.env.NEXT_PUBLIC_API_BASE || 'http://localhost:3001';
+const API_BASE = process.env.NEXT_PUBLIC_API_BASE || 'https://webpro2-skill-wallet-1.onrender.com';
 
 const getFreshToken = async (): Promise<string | null> => {
   await auth.authStateReady();

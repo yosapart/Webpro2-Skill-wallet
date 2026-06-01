@@ -220,8 +220,8 @@ export const useBadgeRequest = (isOpen: boolean, onClose: () => void) => {
         file,
         token,
         payload,
-        uploadUrl: "http://localhost:3001/api/badge-requests/upload",
-        createRequestUrl: "http://localhost:3001/api/badge-requests"
+        uploadUrl: "https://webpro2-skill-wallet-1.onrender.com/api/badge-requests/upload",
+        createRequestUrl: "https://webpro2-skill-wallet-1.onrender.com/api/badge-requests"
       });
 
       // Handle worker messages for logging or debug

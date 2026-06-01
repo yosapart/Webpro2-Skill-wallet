@@ -1,6 +1,6 @@
 import { AuthService } from './auth.service';
 
-const API_BASE = 'http://localhost:3001';
+const API_BASE = 'https://webpro2-skill-wallet-1.onrender.com';
 
 export interface UserProfile {
   id: string;

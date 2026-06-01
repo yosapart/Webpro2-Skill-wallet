@@ -19,7 +19,7 @@ export default function ForgotPasswordPage() {
     setError('');
 
     try {
-      const response = await fetch('http://localhost:3001/api/auth/otp/send', {
+      const response = await fetch('https://webpro2-skill-wallet-1.onrender.com/api/auth/otp/send', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, purpose: 'reset' }),
