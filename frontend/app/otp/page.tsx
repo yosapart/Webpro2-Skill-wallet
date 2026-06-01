@@ -4,6 +4,7 @@ import { ArrowLeft, ShieldCheck } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Suspense } from 'react';
+import { AuthService } from '../../services/auth.service';
 
 function OTPContent() {
   const router = useRouter();
@@ -128,8 +129,13 @@ function OTPContent() {
 
           if (regData.status === "success") {
             sessionStorage.removeItem('pendingUser');
-            alert("Registration successful! You can now login.");
-            router.push('/dash');
+            // ล็อกอินอัตโนมัติเพื่อให้ได้ Token
+            try {
+              await AuthService.loginWithVerifierId(userData.email, userData.password);
+            } catch (err) {
+              console.error("Auto login failed", err);
+            }
+            router.push('/user/overview');
           } else {
             setError(regData.message || "Registration failed after OTP verification");
           }
