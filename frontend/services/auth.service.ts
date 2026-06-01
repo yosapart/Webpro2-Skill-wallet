@@ -40,7 +40,10 @@ export const AuthService = {
 
       throw new Error(data.message || "Login failed");
     } catch (error: any) {
-      console.error("Login Error:", error);
+      const errMsg = String(error?.message || error || "");
+      if (!errMsg.includes("popup-closed-by-user") && !errMsg.includes("cancelled-popup-request")) {
+        console.error("Login Error:", error);
+      }
       throw error;
     }
   },

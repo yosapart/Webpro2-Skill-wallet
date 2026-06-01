@@ -35,7 +35,12 @@ export const SignUpPage = ({ onBackToLanding }: { onBackToLanding: () => void })
         await AuthService.logout(); // เคลียร์ session ออกเพื่อให้สมัครใหม่ได้
       }
     } catch (err: any) {
-      setError(err.message || 'Google sign-up failed. Please try again.');
+      const errMsg = String(err?.message || err || "");
+      if (errMsg.includes("popup-closed-by-user") || errMsg.includes("cancelled-popup-request")) {
+        setError("Sign up cancelled. Please try again."); 
+      } else {
+        setError(errMsg || 'Google sign-up failed. Please try again.');
+      }
     } finally {
       setLoading(false);
     }
@@ -163,7 +168,7 @@ export const SignUpPage = ({ onBackToLanding }: { onBackToLanding: () => void })
               />
             </div>
 
-            {error && <p className="text-red-500 text-sm font-medium">{error}</p>}
+            {error && <p className="text-red-500 text-sm font-medium text-left w-full px-2">{error}</p>}
 
             <button
               disabled={loading}

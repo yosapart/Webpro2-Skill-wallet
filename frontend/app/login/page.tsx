@@ -32,7 +32,7 @@ export const LoginPage = ({ onBackToLanding, onLoginSuccess }: { onBackToLanding
   const handleManualLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!emailInput || !passwordInput) return;
-    
+
     try {
       setLoading(true);
       setError("");
@@ -53,7 +53,7 @@ export const LoginPage = ({ onBackToLanding, onLoginSuccess }: { onBackToLanding
       setLoading(true);
       setError("");
       const result = await AuthService.loginWithGoogle();
-      
+
       if (result.requireRegistration) {
         // ถ้ายอมให้คนแปลกหน้าเข้ามาเป็นนักศึกษาอัตโนมัติ 
         // เราสามารถแอบเรียก register ตรงนี้ได้เลย หรือเด้งไปหน้าให้กรอกข้อมูลเพิ่ม
@@ -65,10 +65,11 @@ export const LoginPage = ({ onBackToLanding, onLoginSuccess }: { onBackToLanding
         handleLoginSuccess();
       }
     } catch (err: any) {
-      if (err.message.includes("popup-closed-by-user") || err.code === "auth/popup-closed-by-user") {
-        setError(""); // ถ้าปิด Popup เอง ไม่ต้องขึ้น Error
+      const errMsg = String(err?.message || err || "");
+      if (errMsg.includes("popup-closed-by-user") || errMsg.includes("cancelled-popup-request")) {
+        setError("Login cancelled. Please try again.");
       } else {
-        setError(err.message || "Failed to login with Google");
+        setError(errMsg || "Failed to login with Google");
       }
     } finally {
       setLoading(false);
@@ -112,7 +113,7 @@ export const LoginPage = ({ onBackToLanding, onLoginSuccess }: { onBackToLanding
 
 
           {/* Social Login (Google Only) */}
-          <button 
+          <button
             onClick={handleGoogleLogin}
             disabled={loading}
             className="w-full flex items-center justify-center gap-3 px-6 py-3.5 border border-slate-800 rounded-full hover:bg-white/5 transition-all mb-8 group active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed"
@@ -121,10 +122,10 @@ export const LoginPage = ({ onBackToLanding, onLoginSuccess }: { onBackToLanding
               <Loader2 className="w-5 h-5 animate-spin text-slate-400" />
             ) : (
               <svg width="20" height="20" viewBox="0 0 48 48" className="group-hover:scale-110 transition-transform">
-                <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
-                <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>
-                <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24s.92 7.54 2.56 10.78l7.97-6.19z"/>
-                <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>
+                <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z" />
+                <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z" />
+                <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24s.92 7.54 2.56 10.78l7.97-6.19z" />
+                <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z" />
               </svg>
             )}
             <span className="font-bold text-sm text-slate-200">
@@ -164,9 +165,9 @@ export const LoginPage = ({ onBackToLanding, onLoginSuccess }: { onBackToLanding
               </div>
             </div>
 
-            {error && <p className="text-red-500 text-sm font-medium text-center">{error}</p>}
+            {error && <p className="text-red-500 text-sm font-medium text-left w-full px-2">{error}</p>}
 
-            <button 
+            <button
               type="submit"
               disabled={loading}
               className="cursor-pointer w-full bg-white text-black font-bold py-4 rounded-full hover:bg-slate-200 transition-all active:scale-[0.98] mt-6 shadow-xl disabled:opacity-50"
@@ -213,9 +214,9 @@ export const LoginPage = ({ onBackToLanding, onLoginSuccess }: { onBackToLanding
           <h2 className="relative text-[2.2rem] font-bold leading-[1.15] text-white mb-6 tracking-tight">
             "This platform bridges the gap between academic theory and industry reality."
           </h2>
-          
+
           <p className="relative text-[#868686] text-base leading-relaxed mb-10 font-light max-w-[480px]">
-            The verified digital badges have completely transformed how we evaluate upcoming tech talent. 
+            The verified digital badges have completely transformed how we evaluate upcoming tech talent.
             It's no longer just about what's on a resume; it's about <span className="text-slate-300 font-medium">verified cryptographic proof of skill</span>.
           </p>
 

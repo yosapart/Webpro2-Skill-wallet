@@ -57,7 +57,7 @@ export const FileUploadArea: React.FC<FileUploadAreaProps> = ({
           <p className="font-bold text-xs sm:text-sm text-slate-300">
             {isDragging ? 'Drop files here' : 'Upload Project Artifacts (.zip, .pdf)'}
           </p>
-          <p className="text-[10px] text-slate-500 mt-1 uppercase tracking-widest font-bold">Max file size: 50MB</p>
+          <p className="text-[10px] text-slate-500 mt-1 uppercase tracking-widest font-bold">Max file size: 10MB</p>
         </div>
       </div>
 

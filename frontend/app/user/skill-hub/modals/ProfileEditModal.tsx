@@ -168,13 +168,14 @@ export const ProfileEditModal: React.FC<ProfileEditModalProps> = ({
               />
             </div>
           </div>
-          <div className="space-y-2">
+          <div className="space-y-2 relative">
             <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest ml-1">Bio</label>
             <textarea
               value={formData.bio}
               placeholder="Tell about yourself..."
+              maxLength={350}
               onChange={(e) => setFormData({ ...formData, bio: e.target.value })}
-              className="w-full bg-black border border-white/5 rounded-2xl p-6 text-sm min-h-[120px] focus:border-[#ff4f40]/50 outline-none text-white shadow-inner custom-scrollbar"
+              className="w-full bg-black border border-white/5 rounded-2xl p-6 text-sm min-h-[120px] focus:border-[#ff4f40]/50 outline-none text-white shadow-inner custom-scrollbar resize-none"
             />
           </div>
         </div>

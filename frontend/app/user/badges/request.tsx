@@ -28,6 +28,7 @@ export const RequestModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: ()
     isDragging,
     activeCategory,
     setActiveCategory,
+    fileError,
     fileInputRef,
     addFiles,
     removeFile,
@@ -159,6 +160,9 @@ export const RequestModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: ()
                 uploadedFiles={uploadedFiles}
                 removeFile={removeFile}
               />
+              {fileError && (
+                <p className="text-red-500 text-sm font-medium mt-1 text-center bg-red-500/10 py-2 rounded-lg border border-red-500/20">{fileError}</p>
+              )}
             </div>
           </section>
 

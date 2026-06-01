@@ -59,6 +59,7 @@ export const useBadgeRequest = (isOpen: boolean, onClose: () => void) => {
   const [currentUser, setCurrentUser] = useState<any>(null);
   const [isDragging, setIsDragging] = useState(false);
   const [activeCategory, setActiveCategory] = useState('SOFTWARE / WEB');
+  const [fileError, setFileError] = useState('');
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -144,10 +145,20 @@ export const useBadgeRequest = (isOpen: boolean, onClose: () => void) => {
   }, [isOpen]);
 
   const addFiles = (files: FileList | null) => {
+    setFileError(''); // reset error
     if (!files || files.length === 0) return;
+    
+    const file = files[0];
+    const maxSize = 10 * 1024 * 1024; // 10MB in bytes
+    
+    if (file.size > maxSize) {
+      setFileError("File size exceeds 10MB limit.");
+      return;
+    }
+    
     const singleFile = {
       id: Math.random().toString(36).substring(7),
-      file: files[0]
+      file: file
     };
     setUploadedFiles([singleFile]);
   };
@@ -260,6 +271,7 @@ export const useBadgeRequest = (isOpen: boolean, onClose: () => void) => {
     isDragging,
     activeCategory,
     setActiveCategory,
+    fileError,
     fileInputRef,
     addFiles,
     removeFile,
