@@ -85,7 +85,7 @@ export const LoginPage = ({ onBackToLanding, onLoginSuccess }: { onBackToLanding
           className="cursor-pointer absolute top-8 left-8 lg:left-12 flex items-center gap-2 text-slate-500 hover:text-white transition-all group focus:outline-none"
         >
           <ArrowLeft size={18} className="group-hover:-translate-x-1 transition-transform" />
-          <span className="text-xs font-bold uppercase tracking-widest">Back to Home</span>
+          <span className="text-xs font-bold uppercase tracking-widest">Back</span>
         </button>
         <div className="w-full max-w-[400px]">
           {/* Logo Section */}

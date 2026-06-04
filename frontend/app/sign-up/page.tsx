@@ -37,7 +37,7 @@ export const SignUpPage = ({ onBackToLanding }: { onBackToLanding: () => void })
     } catch (err: any) {
       const errMsg = String(err?.message || err || "");
       if (errMsg.includes("popup-closed-by-user") || errMsg.includes("cancelled-popup-request")) {
-        setError("Sign up cancelled. Please try again."); 
+        setError("Sign up cancelled. Please try again.");
       } else {
         setError(errMsg || 'Google sign-up failed. Please try again.');
       }
@@ -86,7 +86,7 @@ export const SignUpPage = ({ onBackToLanding }: { onBackToLanding: () => void })
           className="cursor-pointer absolute top-8 left-8 lg:left-12 flex items-center gap-2 text-slate-500 hover:text-white transition-all group focus:outline-none"
         >
           <ArrowLeft size={18} className="group-hover:-translate-x-1 transition-transform" />
-          <Link href='/landing'><span className="text-xs font-bold uppercase tracking-widest">Back to Home</span></Link>
+          <Link href='/landing'><span className="text-xs font-bold uppercase tracking-widest">Back</span></Link>
         </button>
 
         <div className="w-full max-w-100">
