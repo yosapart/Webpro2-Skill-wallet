@@ -65,7 +65,7 @@ export const BadgePage = () => {
         {/* Request button — always visible */}
         <button
           onClick={() => setShowRequestModal(true)}
-          className="shrink-0 cursor-pointer bg-[#ff4f40] hover:bg-[#e53e30] text-white text-[14px] sm:text-[14px] font-semibold px-4 sm:px-6 py-2 sm:py-2.5 rounded-xl transition-all shadow-lg shadow-[#ff4f40]/20 flex items-center gap-2 active:scale-95 "
+          className="shrink-0 cursor-pointer bg-[#ff4f40] hover:bg-[#e53e30] text-white text-[14px] sm:text-[14px] font-semibold px-4 sm:px-4 py-2 sm:py-2.5 rounded-xl transition-all shadow-lg shadow-[#ff4f40]/20 flex items-center gap-2 active:scale-95 "
         >
           <Plus size={14} />
           <span className="hidden sm:inline">Request New Badge</span>

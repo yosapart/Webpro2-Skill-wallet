@@ -2,23 +2,23 @@ self.addEventListener('message', async (event: MessageEvent) => {
   const { file, maxWidth = 1920, quality = 0.8 } = event.data;
 
   try {
-    // Check if OffscreenCanvas is supported
+    // เช็คการรองรับ OffscreenCanvas
     if (typeof OffscreenCanvas === 'undefined') {
       throw new Error('OffscreenCanvas is not supported in this browser.');
     }
 
-    // 1. Create an ImageBitmap from the file (very fast, done off-main-thread)
+    // 1. สร้าง ImageBitmap
     const bitmap = await createImageBitmap(file);
 
     let { width, height } = bitmap;
 
-    // 2. Calculate new dimensions maintaining aspect ratio
+    // 2. คำนวณขนาดใหม่ให้สมส่วน
     if (width > maxWidth) {
       height = Math.round((height * maxWidth) / width);
       width = maxWidth;
     }
 
-    // 3. Create OffscreenCanvas and draw
+    // 3. วาดรูปลง OffscreenCanvas
     const canvas = new OffscreenCanvas(width, height);
     const ctx = canvas.getContext('2d');
     
@@ -28,16 +28,16 @@ self.addEventListener('message', async (event: MessageEvent) => {
 
     ctx.drawImage(bitmap, 0, 0, width, height);
 
-    // 4. Convert to compressed WebP Blob
+    // 4. แปลงเป็นไฟล์ เพื่อบีบอัด
     const compressedBlob = await canvas.convertToBlob({
       type: 'image/webp',
       quality: quality
     });
 
-    // 5. Send back to main thread
+    // 5. ส่งไฟล์กลับ
     self.postMessage({ status: 'success', blob: compressedBlob });
     
-    // Clean up memory
+    // คืนหน่วยความจำ
     bitmap.close();
 
   } catch (error: any) {

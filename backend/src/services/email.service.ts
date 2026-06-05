@@ -1,17 +1,31 @@
 import nodemailer from 'nodemailer';
 
-const transporter = nodemailer.createTransport({
+// ✅ สร้าง transporter ครั้งเดียว (Singleton)
+const createTransporter = () => nodemailer.createTransport({
     service: 'gmail',
     auth: {
-        user: process.env.EMAIL_USER, // e.g., 'your.email@gmail.com'
-        pass: process.env.EMAIL_PASS  // Gmail App Password
-    }
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS
+    },
+    // ✅ เพิ่ม timeout ป้องกัน hang
+    connectionTimeout: 5000,
+    greetingTimeout: 5000,
+    socketTimeout: 10000,
+    pool: true,         // ✅ ใช้ connection pool แทนสร้างใหม่ทุกครั้ง
+    maxConnections: 3
 });
+
+let transporter: nodemailer.Transporter | null = null;
 
 export const EmailService = {
     async sendOtpEmail(to: string, otp: string) {
+        // ✅ ใช้ transporter เดิมถ้ามีอยู่แล้ว
+        if (!transporter) {
+            transporter = createTransporter();
+        }
+
         const mailOptions = {
-            from: process.env.EMAIL_USER,
+            from: `"Ip&s Skill Wallet" <${process.env.EMAIL_USER}>`,
             to,
             subject: 'Your Verification Code - Ip&s Skill Wallet',
             html: `
@@ -35,9 +49,11 @@ export const EmailService = {
         try {
             await transporter.sendMail(mailOptions);
             return true;
-        } catch (error) {
-            console.error("Error sending email:", error);
+        } catch (error: any) {
+            console.error("❌ Email send error:", error.message);
+            // ✅ reset transporter ถ้า error เพื่อสร้างใหม่ครั้งหน้า
+            transporter = null;
             return false;
         }
     }
-}
+};

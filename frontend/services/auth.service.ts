@@ -3,7 +3,7 @@ import { auth, googleProvider } from "../config/firebase";
 
 export const DEFAULT_AVATAR = "https://cdn-icons-png.flaticon.com/512/149/149071.png";
 
-const getApiUrl = () => {
+export const getApiUrl = () => {
   if (typeof window !== "undefined" && window.location.hostname !== "localhost") {
     return "https://webpro2-skill-wallet-1.onrender.com/api";
   }
@@ -18,7 +18,6 @@ export const AuthService = {
       await setPersistence(auth, browserSessionPersistence);
 
       const result = await signInWithPopup(auth, googleProvider);
-      // ได้ Token มา
       const idToken = await result.user.getIdToken();
 
       // ส่ง Token ไปตรวจสอบกับ Backend

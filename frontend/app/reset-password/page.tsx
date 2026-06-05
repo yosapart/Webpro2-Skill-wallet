@@ -2,6 +2,7 @@
 import React, { useState, useRef, Suspense } from 'react';
 import { ArrowLeft, LockKeyhole } from 'lucide-react';
 import { useRouter, useSearchParams } from 'next/navigation';
+import { getApiUrl } from '../../services/auth.service';
 
 function ResetPasswordContent() {
   const router = useRouter();
@@ -60,7 +61,7 @@ function ResetPasswordContent() {
     setError('');
 
     try {
-      const res = await fetch("https://webpro2-skill-wallet-1.onrender.com/api/auth/reset-password", {
+      const res = await fetch(`${getApiUrl()}/auth/reset-password`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, otp: otpValue, newPassword })

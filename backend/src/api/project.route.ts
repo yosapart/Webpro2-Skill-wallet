@@ -5,9 +5,7 @@ import { authMiddleware } from '../middleware/auth.middleware';
 export const projectRoute = new Elysia({ prefix: '/project' })
     .use(authMiddleware)
 
-    // =====================================================
     // POST /api/project/upload — Upload รูปภาพ (ลอกจาก Badge Upload ที่ทำงานได้)
-    // =====================================================
     .post('/upload', async ({ body, user, set }: any) => {
         console.log("Project Upload endpoint hit!");
         try {
@@ -70,20 +68,14 @@ export const projectRoute = new Elysia({ prefix: '/project' })
         body: t.Object({ file: t.File() }),
         detail: { tags: ['Project'], summary: 'Upload รูปภาพ Cover ของ Project' }
     })
-
-    // =====================================================
     // GET /api/project — ดึงโปรเจกต์ทั้งหมด
-    // =====================================================
     .get('', async ({ user }: any) => {
         return await ProjectController.getProjects(user.uid);
     }, {
         isSignIn: true,
         detail: { tags: ['Project'], summary: 'ดึงข้อมูล Featured Projects ทั้งหมด' }
     })
-
-    // =====================================================
     // POST /api/project — สร้างโปรเจกต์ใหม่ (รับ JSON + URL ของรูปที่ upload แล้ว)
-    // =====================================================
     .post('', async ({ body, user }: any) => {
         console.log("Backend received POST /project (create)");
         const data = {
@@ -103,10 +95,7 @@ export const projectRoute = new Elysia({ prefix: '/project' })
         }),
         detail: { tags: ['Project'], summary: 'สร้าง Featured Project ใหม่' }
     })
-
-    // =====================================================
     // PUT /api/project/:id — แก้ไขโปรเจกต์
-    // =====================================================
     .put('/:id', async ({ params, body, user }: any) => {
         const data = {
             ...body,
@@ -127,10 +116,7 @@ export const projectRoute = new Elysia({ prefix: '/project' })
         }),
         detail: { tags: ['Project'], summary: 'แก้ไข Featured Project' }
     })
-
-    // =====================================================
     // DELETE /api/project/:id — ลบโปรเจกต์
-    // =====================================================
     .delete('/:id', async ({ params, user }: any) => {
         return await ProjectController.removeProject(user.uid, params.id);
     }, {

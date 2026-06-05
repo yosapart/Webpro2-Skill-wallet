@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { ArrowLeft, KeyRound } from 'lucide-react';
 import { useRouter } from 'next/navigation';
+import { getApiUrl } from '../../services/auth.service';
 
 export default function ForgotPasswordPage() {
   const router = useRouter();
@@ -19,13 +20,13 @@ export default function ForgotPasswordPage() {
     setError('');
 
     try {
-      const response = await fetch('https://webpro2-skill-wallet-1.onrender.com/api/auth/otp/send', {
+      const response = await fetch(`${getApiUrl()}/auth/otp/send`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, purpose: 'reset' }),
       });
       const data = await response.json();
-      
+
       if (data.status === 'success') {
         router.push(`/reset-password?email=${encodeURIComponent(email)}`);
       } else {

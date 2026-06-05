@@ -3,7 +3,7 @@ import React from 'react';
 import { Mail, Lock, Quote, ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { AuthService } from '../../services/auth.service';
+import { AuthService, getApiUrl } from '../../services/auth.service';
 
 export const SignUpPage = ({ onBackToLanding }: { onBackToLanding: () => void }) => {
   const router = useRouter();
@@ -57,7 +57,7 @@ export const SignUpPage = ({ onBackToLanding }: { onBackToLanding: () => void })
     setError('');
 
     try {
-      const response = await fetch('https://webpro2-skill-wallet-1.onrender.com/api/auth/otp/send', {
+      const response = await fetch(`${getApiUrl()}/auth/otp/send`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, purpose: 'register' }),

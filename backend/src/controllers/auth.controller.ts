@@ -28,8 +28,8 @@ export const AuthController = {
 
     // ใช้สำหรับคุณ (Admin) สร้างให้อาจารย์เท่านั้น
     async createVerifier(user_id: string, email: string, name: string, position: string, password?: string) {
-        // ใช้ crypto ในการ Hash รหัสผ่านเบื้องต้น หรือใช้ bcrypt ถ้าต้องการความปลอดภัยสูงสุด
-        // แต่เพื่อให้เหมือนรอบที่แล้ว เราจะบันทึกเป็น Plain text ไปก่อนชั่วคราว หรือถ้าอยาก hash บอกได้ครับ
+        // ใช้ crypto ในการ Hash รหัสผ่านเบื้องต้น
+        // แต่เพื่อให้เหมือนรอบที่แล้ว เราจะบันทึกเป็น Plain text ไปก่อนชั่วคราว
         await db.collection("users").doc(user_id).set({
             user_id: user_id,
             email: email,
@@ -133,24 +133,19 @@ export const AuthController = {
         }
     },
 
-    // ระบบ Login (รองรับทั้ง Mock, JWT ของ Verifier และ Firebase Token จริง)
+    // ระบบ Login (JWT ของ Verifier และ Firebase Token จริง)
     async loginCheck(idToken: string) {
         try {
             let user_id = "";
 
-            // 1. เช็คว่าเป็น Mock Login หรือไม่ (test-u1, test-u2)
-            if (idToken.startsWith("test-")) {
-                user_id = idToken.replace("test-", "");
-            } else {
-                // 2. ถ้าไม่ใช่ Mock ให้ลองเช็ค JWT ของเราก่อน (ฝั่งอาจารย์)
-                try {
-                    const decoded = jwt.verify(idToken, JWT_SECRET) as any;
-                    user_id = decoded.uid;
-                } catch (err) {
-                    // 3. ถ้าไม่ใช่ JWT ของเรา หรือหมดอายุ ให้เช็คกับ Firebase (ฝั่งนักศึกษา)
-                    const decodedToken = await auth.verifyIdToken(idToken);
-                    user_id = decodedToken.uid;
-                }
+            // 1. ลองเช็คด้วย JWT ของเราก่อน (ฝั่งอาจารย์)
+            try {
+                const decoded = jwt.verify(idToken, JWT_SECRET) as any;
+                user_id = decoded.uid;
+            } catch (err) {
+                // 2. ถ้าไม่ใช่ JWT ของเรา หรือหมดอายุ ให้เช็คกับ Firebase (ฝั่งนักศึกษา)
+                const decodedToken = await auth.verifyIdToken(idToken);
+                user_id = decodedToken.uid;
             }
 
             // ไปดึงข้อมูลจาก DB จริงๆ ตาม UID ที่ได้
